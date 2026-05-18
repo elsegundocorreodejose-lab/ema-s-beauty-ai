@@ -14,16 +14,174 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      appointments: {
+        Row: {
+          appointment_date: string
+          appointment_type: string
+          created_at: string
+          id: string
+          notes: string | null
+          patient_name: string
+          phone_number: string
+          reminder_sent: boolean
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          appointment_date: string
+          appointment_type: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          patient_name: string
+          phone_number: string
+          reminder_sent?: boolean
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          appointment_date?: string
+          appointment_type?: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          patient_name?: string
+          phone_number?: string
+          reminder_sent?: boolean
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      esthetic_settings: {
+        Row: {
+          about_esthetic: string | null
+          esthetic_address: string | null
+          esthetic_email: string | null
+          esthetic_name: string
+          esthetic_phone: string | null
+          id: number
+          services: string[]
+          timezone: string
+          updated_at: string
+          whatsapp_webhook_url: string | null
+          working_hours: string | null
+        }
+        Insert: {
+          about_esthetic?: string | null
+          esthetic_address?: string | null
+          esthetic_email?: string | null
+          esthetic_name?: string
+          esthetic_phone?: string | null
+          id?: number
+          services?: string[]
+          timezone?: string
+          updated_at?: string
+          whatsapp_webhook_url?: string | null
+          working_hours?: string | null
+        }
+        Update: {
+          about_esthetic?: string | null
+          esthetic_address?: string | null
+          esthetic_email?: string | null
+          esthetic_name?: string
+          esthetic_phone?: string | null
+          id?: number
+          services?: string[]
+          timezone?: string
+          updated_at?: string
+          whatsapp_webhook_url?: string | null
+          working_hours?: string | null
+        }
+        Relationships: []
+      }
+      messages: {
+        Row: {
+          id: string
+          message_content: string
+          phone_number: string
+          received_at: string
+          sender: string
+        }
+        Insert: {
+          id?: string
+          message_content: string
+          phone_number: string
+          received_at?: string
+          sender: string
+        }
+        Update: {
+          id?: string
+          message_content?: string
+          phone_number?: string
+          received_at?: string
+          sender?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "staff" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +308,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "staff", "user"],
+    },
   },
 } as const
