@@ -8,6 +8,14 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+.tools/
+.env
+package-lock.json
+clone-setup-log.txt
+download-missing.mjs
+copy-bun-lock.mjs
+RUN_DOWNLOAD.bat
+
 dist
 dist-ssr
 .output
