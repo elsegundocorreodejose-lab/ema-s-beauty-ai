@@ -1,38 +1,65 @@
-# Logs
-logs
+# --- Secretos y entorno (nunca subir) ---
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+secrets/
+credentials.json
+service-account*.json
+**/id_rsa
+**/.netrc
+
+# Supabase local (puede contener tokens)
+supabase/.branches
+supabase/.temp
+
+# --- Dependencias y artefactos de build ---
+node_modules/
+dist/
+dist-ssr/
+.output/
+.vinxi/
+.tanstack/
+.nitro/
+*.local
+
+# --- Herramientas locales / setup ---
+.tools/
+MinGit.zip
+gh.zip
+
+# --- Logs y temporales ---
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-
-node_modules
-.tools/
-.env
-package-lock.json
 clone-setup-log.txt
+dev-server.log
+
+# Scripts de setup puntual (no parte del producto)
 download-missing.mjs
 copy-bun-lock.mjs
 RUN_DOWNLOAD.bat
+package-lock.json
 
-dist
-dist-ssr
-.output
-.vinxi
-.tanstack/**
-.nitro
-*.local
-
-# Wrangler / Cloudflare
+# --- Cloudflare / Wrangler ---
 .wrangler/
-.dev.vars
 
-# Editor directories and files
+# --- Editor y sistema ---
 .vscode/*
 !.vscode/extensions.json
-.idea
+.idea/
 .DS_Store
+Thumbs.db
 *.suo
 *.ntvs*
 *.njsproj
