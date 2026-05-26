@@ -5,6 +5,7 @@
 | `MANIFEST.json` | Metadatos del punto de restauración | Sí |
 | `../docs/RESPALDO-2026-05-26.md` | Respaldo del día (URLs, funciones) | Sí |
 | `../docs/CHECKLIST-BACKUP-GITHUB.md` | Checklist local + GitHub + nube | Sí |
+| `../docs/CHECKLIST-PROYECTO-EMA.md` | Checklist operativo completo del proyecto | Sí |
 | `local-secrets/` | Copias de `.env` con claves reales | **No** (gitignore) |
 | `archives/` | ZIPs del proyecto | **No** (gitignore) |
 

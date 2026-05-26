@@ -1,6 +1,6 @@
 # Estado del proyecto — Ema IA (ema-s-beauty-ai)
 
-**Última actualización:** 2026-05-19 (respaldo WhatsApp operativo)  
+**Última actualización:** 2026-05-26 — **Punto de control** `v0.2-punto-control-2026-05-26` (ver `docs/PUNTO-CONTROL-2026-05-26.md`)  
 **Repositorio:** [elsegundocorreodejose-lab/ema-s-beauty-ai](https://github.com/elsegundocorreodejose-lab/ema-s-beauty-ai)  
 **Rama:** `main`
 
@@ -15,7 +15,8 @@
 | Frontend MVP | Implementado |
 | Auth + roles Supabase | Implementado |
 | Base de datos (proyecto MCP) | Esquema + Twilio aplicados |
-| WhatsApp Twilio | **Operativo** — webhook + envío vía Supabase Edge (ver `docs/RESPALDO-2026-05-19-whatsapp-funcionando.md`) |
+| WhatsApp Twilio | **Operativo** — webhook + envío vía Supabase Edge (ver `docs/PUNTO-CONTROL-2026-05-26.md`) |
+| Respaldo / docs | Checklists, backup local, backup GitHub automático (scripts) |
 | IA / automatización Ema | Pendiente |
 | Despliegue producción | Pendiente |
 | Tests / CI | Pendiente |

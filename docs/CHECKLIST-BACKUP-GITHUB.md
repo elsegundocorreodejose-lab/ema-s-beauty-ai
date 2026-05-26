@@ -144,6 +144,22 @@ https://bklnaeftoztcahfgxchl.supabase.co/functions/v1/twilio-secrets-check
 
 ---
 
+## Respaldo automático diario a GitHub
+
+Ver guía completa: **`docs/BACKUP-AUTOMATICO-GITHUB.md`**
+
+```powershell
+# Probar una vez
+powershell -ExecutionPolicy Bypass -File scripts\daily-github-backup.ps1
+
+# Programar cada día a las 20:00
+powershell -ExecutionPolicy Bypass -File scripts\register-daily-github-backup.ps1
+```
+
+Requisito: haber hecho **Push manual** al menos una vez con GitHub Desktop (credenciales guardadas).
+
+---
+
 ## Comandos útiles
 
 ```powershell
