@@ -7,7 +7,9 @@ $root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 Set-Location $root
 
 $git = $null
+$repoToolsGit = Join-Path (Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)) ".tools\MinGit\cmd\git.exe"
 $candidates = @(
+  $repoToolsGit,
   "C:\Program Files\Git\cmd\git.exe",
   "C:\Program Files (x86)\Git\cmd\git.exe",
   "git"
