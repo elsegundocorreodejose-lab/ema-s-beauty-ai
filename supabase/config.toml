@@ -1,1 +1,9 @@
 project_id = "bklnaeftoztcahfgxchl"
+
+# Twilio envía POST sin JWT de Supabase; la firma X-Twilio-Signature autentica.
+[functions.whatsapp-webhook]
+verify_jwt = false
+
+# Panel Ema: envío con JWT del usuario autenticado.
+[functions.whatsapp-send]
+verify_jwt = true

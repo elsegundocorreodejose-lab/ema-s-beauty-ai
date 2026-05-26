@@ -63,6 +63,7 @@ export type Database = {
           id: number
           services: string[]
           timezone: string
+          twilio_whatsapp_from: string | null
           updated_at: string
           whatsapp_webhook_url: string | null
           working_hours: string | null
@@ -76,6 +77,7 @@ export type Database = {
           id?: number
           services?: string[]
           timezone?: string
+          twilio_whatsapp_from?: string | null
           updated_at?: string
           whatsapp_webhook_url?: string | null
           working_hours?: string | null
@@ -89,6 +91,7 @@ export type Database = {
           id?: number
           services?: string[]
           timezone?: string
+          twilio_whatsapp_from?: string | null
           updated_at?: string
           whatsapp_webhook_url?: string | null
           working_hours?: string | null
@@ -102,6 +105,7 @@ export type Database = {
           phone_number: string
           received_at: string
           sender: string
+          twilio_message_sid: string | null
         }
         Insert: {
           id?: string
@@ -109,6 +113,7 @@ export type Database = {
           phone_number: string
           received_at?: string
           sender: string
+          twilio_message_sid?: string | null
         }
         Update: {
           id?: string
@@ -116,6 +121,7 @@ export type Database = {
           phone_number?: string
           received_at?: string
           sender?: string
+          twilio_message_sid?: string | null
         }
         Relationships: []
       }

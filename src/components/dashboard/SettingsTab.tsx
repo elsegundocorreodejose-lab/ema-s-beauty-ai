@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
+import { getTwilioStatus } from "@/functions/whatsapp";
 import { Loader2, Plus, X, Save } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -20,11 +22,17 @@ interface Settings {
   services: string[];
   about_esthetic: string | null;
   whatsapp_webhook_url: string | null;
+  twilio_whatsapp_from: string | null;
   timezone: string;
 }
 
 export function SettingsTab() {
   const queryClient = useQueryClient();
+  const fetchTwilioStatus = useServerFn(getTwilioStatus);
+  const { data: twilioStatus } = useQuery({
+    queryKey: ["twilio-status"],
+    queryFn: () => fetchTwilioStatus(),
+  });
   const { data, isLoading } = useQuery({
     queryKey: ["esthetic_settings"],
     queryFn: async () => {
@@ -72,6 +80,7 @@ export function SettingsTab() {
       services: form.services,
       about_esthetic: form.about_esthetic,
       whatsapp_webhook_url: form.whatsapp_webhook_url,
+      twilio_whatsapp_from: form.twilio_whatsapp_from,
       timezone: form.timezone,
     }).eq("id", 1);
     setSaving(false);
@@ -143,13 +152,66 @@ export function SettingsTab() {
 
         <Card className="shadow-soft">
           <CardHeader>
-            <CardTitle>Integración WhatsApp</CardTitle>
-            <CardDescription>URL del webhook para recibir mensajes.</CardDescription>
+            <CardTitle>WhatsApp con Twilio</CardTitle>
+            <CardDescription>
+              Configura el webhook en la consola de Twilio para recibir mensajes entrantes.
+            </CardDescription>
           </CardHeader>
-          <CardContent>
-            <Field label="Webhook URL">
-              <Input value={form.whatsapp_webhook_url ?? ""} onChange={(e) => update("whatsapp_webhook_url", e.target.value)} placeholder="https://..." />
+          <CardContent className="space-y-4">
+            <div className="rounded-lg border border-border bg-muted/40 p-3 text-sm">
+              <p className="font-medium">
+                Estado:{" "}
+                {twilioStatus?.configured ? (
+                  <span className="text-[oklch(0.45_0.12_150)]">Envío local (.env TWILIO_*)</span>
+                ) : twilioStatus?.sendViaEdge ? (
+                  <span className="text-[oklch(0.45_0.12_150)]">
+                    Envío vía Supabase Edge (whatsapp-send)
+                  </span>
+                ) : (
+                  <span className="text-destructive">
+                    Falta whatsapp-send en Supabase o TWILIO_* en .env
+                  </span>
+                )}
+              </p>
+              {twilioStatus?.edgeFunctionWebhookUrl && (
+                <p className="mt-2 break-all text-xs text-muted-foreground">
+                  Webhook Supabase Edge (recomendado):{" "}
+                  <code className="text-foreground">{twilioStatus.edgeFunctionWebhookUrl}</code>
+                </p>
+              )}
+              {twilioStatus?.edgeSendUrl && (
+                <p className="mt-1 break-all text-xs text-muted-foreground">
+                  Envío desde Mensajes:{" "}
+                  <code className="text-foreground">{twilioStatus.edgeSendUrl}</code>
+                </p>
+              )}
+              {twilioStatus?.webhookUrl && (
+                <p className="mt-1 break-all text-xs text-muted-foreground">
+                  Webhook app (alternativa):{" "}
+                  <code className="text-foreground">{twilioStatus.webhookUrl}</code>
+                </p>
+              )}
+            </div>
+            <Field label="Número WhatsApp (Twilio)">
+              <Input
+                value={form.twilio_whatsapp_from ?? ""}
+                onChange={(e) => update("twilio_whatsapp_from", e.target.value)}
+                placeholder="whatsapp:+14155238886"
+              />
             </Field>
+            <Field label="Notas / URL externa (opcional)">
+              <Input
+                value={form.whatsapp_webhook_url ?? ""}
+                onChange={(e) => update("whatsapp_webhook_url", e.target.value)}
+                placeholder="URL de documentación o n8n"
+              />
+            </Field>
+            <p className="text-xs text-muted-foreground">
+              En Twilio Console → WhatsApp Sandbox: método POST y la URL Edge de arriba. Secretos en Supabase
+              Dashboard → Edge Functions → Secrets (ver docs/WHATSAPP_TWILIO.md). Para responder desde
+              Mensajes despliega la función <code className="text-foreground">whatsapp-send</code> o define
+              TWILIO_* en el .env del servidor.
+            </p>
           </CardContent>
         </Card>
 

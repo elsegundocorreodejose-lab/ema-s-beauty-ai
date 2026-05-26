@@ -1,0 +1,24 @@
+{
+  "backupDate": "2026-05-26",
+  "label": "whatsapp-funcionando-completo",
+  "project": "ema-s-beauty-ai",
+  "supabaseProjectRef": "bklnaeftoztcahfgxchl",
+  "supabaseUrl": "https://bklnaeftoztcahfgxchl.supabase.co",
+  "latestZip": "backups/archives/ema-s-beauty-ai-2026-05-26-100746.zip",
+  "latestEnvBackup": "backups/local-secrets/.env.backup-2026-05-26",
+  "edgeFunctions": [
+    { "slug": "whatsapp-webhook", "verifyJwt": false, "version": 12 },
+    { "slug": "whatsapp-send", "verifyJwt": true, "version": 1 },
+    { "slug": "twilio-secrets-check", "verifyJwt": false, "version": 8 }
+  ],
+  "twilioSandboxFrom": "whatsapp:+14155238886",
+  "webhookUrl": "https://bklnaeftoztcahfgxchl.supabase.co/functions/v1/whatsapp-webhook",
+  "sendUrl": "https://bklnaeftoztcahfgxchl.supabase.co/functions/v1/whatsapp-send",
+  "secretsCheckUrl": "https://bklnaeftoztcahfgxchl.supabase.co/functions/v1/twilio-secrets-check",
+  "githubRepo": "https://github.com/elsegundocorreodejose-lab/ema-s-beauty-ai",
+  "docs": [
+    "docs/RESPALDO-2026-05-26.md",
+    "docs/CHECKLIST-BACKUP-GITHUB.md",
+    "docs/WHATSAPP_TWILIO.md"
+  ]
+}

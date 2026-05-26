@@ -1,12 +1,17 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
 import { formatDistanceToNow, format } from "date-fns";
 import { es } from "date-fns/locale";
-import { Sparkles, Search, MessageCircle } from "lucide-react";
+import { Sparkles, Search, MessageCircle, Send, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { supabase } from "@/integrations/supabase/client";
+import { sendWhatsAppReply } from "@/functions/whatsapp";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 interface Message {
   id: string;
@@ -17,8 +22,12 @@ interface Message {
 }
 
 export function MessagesTab() {
+  const queryClient = useQueryClient();
+  const sendReply = useServerFn(sendWhatsAppReply);
   const [selectedPhone, setSelectedPhone] = useState<string | null>(null);
   const [search, setSearch] = useState("");
+  const [replyText, setReplyText] = useState("");
+  const [sending, setSending] = useState(false);
 
   const { data: messages = [] } = useQuery({
     queryKey: ["messages"],
@@ -62,6 +71,21 @@ export function MessagesTab() {
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [current?.messages.length]);
+
+  const handleSend = async () => {
+    if (!current || !replyText.trim()) return;
+    setSending(true);
+    try {
+      await sendReply({ data: { phoneNumber: current.phone, body: replyText.trim() } });
+      setReplyText("");
+      await queryClient.invalidateQueries({ queryKey: ["messages"] });
+      toast.success("Mensaje enviado por WhatsApp");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "No se pudo enviar el mensaje");
+    } finally {
+      setSending(false);
+    }
+  };
 
   return (
     <div className="grid h-[calc(100vh-220px)] grid-cols-1 gap-4 md:grid-cols-[320px_1fr]">
@@ -154,8 +178,34 @@ export function MessagesTab() {
                 );
               })}
             </div>
-            <div className="border-t border-border bg-muted/40 px-4 py-3 text-center text-xs text-muted-foreground">
-              Ema responde automáticamente desde WhatsApp.
+            <div className="border-t border-border bg-card p-3">
+              <div className="flex gap-2">
+                <Textarea
+                  placeholder="Escribe un mensaje por WhatsApp (Twilio)..."
+                  value={replyText}
+                  onChange={(e) => setReplyText(e.target.value)}
+                  rows={2}
+                  className="min-h-0 resize-none"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      void handleSend();
+                    }
+                  }}
+                />
+                <Button
+                  type="button"
+                  size="icon"
+                  disabled={sending || !replyText.trim()}
+                  className="shrink-0 bg-gradient-primary text-primary-foreground hover:opacity-95"
+                  onClick={() => void handleSend()}
+                >
+                  {sending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+                </Button>
+              </div>
+              <p className="mt-2 text-center text-[10px] text-muted-foreground">
+                Envío real vía API de Twilio. El cliente debe tener la ventana de 24h abierta o usar plantilla aprobada.
+              </p>
             </div>
           </>
         ) : (

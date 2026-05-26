@@ -2,6 +2,8 @@
 .env
 .env.*
 !.env.example
+backups/local-secrets/
+backups/archives/*.zip
 .dev.vars
 .dev.vars.*
 *.pem
