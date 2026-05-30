@@ -5,8 +5,10 @@
   "project": "ema-s-beauty-ai",
   "supabaseProjectRef": "bklnaeftoztcahfgxchl",
   "supabaseUrl": "https://bklnaeftoztcahfgxchl.supabase.co",
-  "latestZip": "backups/archives/ema-s-beauty-ai-2026-05-26-144310.zip",
-  "latestEnvBackup": "backups/local-secrets/.env.backup-2026-05-26",
+  "latestZip": "backups/archives/ema-s-beauty-ai-2026-05-30-201903.zip",
+  "latestZipBytes": 561809,
+  "latestEnvBackup": "backups/local-secrets/.env.backup-2026-05-30",
+  "latestBackupDate": "2026-05-30T20:19:03",
   "edgeFunctions": [
     { "slug": "whatsapp-webhook", "verifyJwt": false, "version": 12 },
     { "slug": "whatsapp-send", "verifyJwt": true, "version": 1 },

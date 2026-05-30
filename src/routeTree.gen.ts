@@ -10,13 +10,28 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ProtectedRouteImport } from './routes/_protected'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ProtectedTechnicianRouteImport } from './routes/_protected/technician'
+import { Route as ProtectedSettingsRouteImport } from './routes/_protected/settings'
+import { Route as ProtectedHubRouteImport } from './routes/_protected/hub'
+import { Route as ProtectedHomeRouteImport } from './routes/_protected/home'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProtectedRoute = ProtectedRouteImport.update({
+  id: '/_protected',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
@@ -28,6 +43,26 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProtectedTechnicianRoute = ProtectedTechnicianRouteImport.update({
+  id: '/technician',
+  path: '/technician',
+  getParentRoute: () => ProtectedRoute,
+} as any)
+const ProtectedSettingsRoute = ProtectedSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => ProtectedRoute,
+} as any)
+const ProtectedHubRoute = ProtectedHubRouteImport.update({
+  id: '/hub',
+  path: '/hub',
+  getParentRoute: () => ProtectedRoute,
+} as any)
+const ProtectedHomeRoute = ProtectedHomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => ProtectedRoute,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -36,37 +71,77 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/login': typeof LoginRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/home': typeof ProtectedHomeRoute
+  '/hub': typeof ProtectedHubRoute
+  '/settings': typeof ProtectedSettingsRoute
+  '/technician': typeof ProtectedTechnicianRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/login': typeof LoginRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/home': typeof ProtectedHomeRoute
+  '/hub': typeof ProtectedHubRoute
+  '/settings': typeof ProtectedSettingsRoute
+  '/technician': typeof ProtectedTechnicianRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/_protected': typeof ProtectedRouteWithChildren
+  '/auth': typeof AuthRoute
   '/login': typeof LoginRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_protected/home': typeof ProtectedHomeRoute
+  '/_protected/hub': typeof ProtectedHubRoute
+  '/_protected/settings': typeof ProtectedSettingsRoute
+  '/_protected/technician': typeof ProtectedTechnicianRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/dashboard'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/login'
+    | '/dashboard'
+    | '/home'
+    | '/hub'
+    | '/settings'
+    | '/technician'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/dashboard'
+  to:
+    | '/'
+    | '/auth'
+    | '/login'
+    | '/dashboard'
+    | '/home'
+    | '/hub'
+    | '/settings'
+    | '/technician'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/_protected'
+    | '/auth'
     | '/login'
     | '/_authenticated/dashboard'
+    | '/_protected/home'
+    | '/_protected/hub'
+    | '/_protected/settings'
+    | '/_protected/technician'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
+  ProtectedRoute: typeof ProtectedRouteWithChildren
+  AuthRoute: typeof AuthRoute
   LoginRoute: typeof LoginRoute
 }
 
@@ -77,6 +152,20 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_protected': {
+      id: '/_protected'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof ProtectedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -92,6 +181,34 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_protected/technician': {
+      id: '/_protected/technician'
+      path: '/technician'
+      fullPath: '/technician'
+      preLoaderRoute: typeof ProtectedTechnicianRouteImport
+      parentRoute: typeof ProtectedRoute
+    }
+    '/_protected/settings': {
+      id: '/_protected/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof ProtectedSettingsRouteImport
+      parentRoute: typeof ProtectedRoute
+    }
+    '/_protected/hub': {
+      id: '/_protected/hub'
+      path: '/hub'
+      fullPath: '/hub'
+      preLoaderRoute: typeof ProtectedHubRouteImport
+      parentRoute: typeof ProtectedRoute
+    }
+    '/_protected/home': {
+      id: '/_protected/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof ProtectedHomeRouteImport
+      parentRoute: typeof ProtectedRoute
     }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
@@ -115,9 +232,29 @@ const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
   AuthenticatedRouteChildren,
 )
 
+interface ProtectedRouteChildren {
+  ProtectedHomeRoute: typeof ProtectedHomeRoute
+  ProtectedHubRoute: typeof ProtectedHubRoute
+  ProtectedSettingsRoute: typeof ProtectedSettingsRoute
+  ProtectedTechnicianRoute: typeof ProtectedTechnicianRoute
+}
+
+const ProtectedRouteChildren: ProtectedRouteChildren = {
+  ProtectedHomeRoute: ProtectedHomeRoute,
+  ProtectedHubRoute: ProtectedHubRoute,
+  ProtectedSettingsRoute: ProtectedSettingsRoute,
+  ProtectedTechnicianRoute: ProtectedTechnicianRoute,
+}
+
+const ProtectedRouteWithChildren = ProtectedRoute._addFileChildren(
+  ProtectedRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
+  ProtectedRoute: ProtectedRouteWithChildren,
+  AuthRoute: AuthRoute,
   LoginRoute: LoginRoute,
 }
 export const routeTree = rootRouteImport
