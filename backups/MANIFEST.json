@@ -1,12 +1,13 @@
 {
-  "checkpoint": "v0.2-punto-control-2026-05-26",
-  "checkpointDate": "2026-05-26",
-  "label": "whatsapp-mvp-documentacion-respaldos",
+  "checkpoint": "v0.3-ema-funcionando-2026-05-30",
+  "checkpointDate": "2026-05-30",
+  "label": "whatsapp-verificado-funcionando",
   "project": "ema-s-beauty-ai",
   "supabaseProjectRef": "bklnaeftoztcahfgxchl",
   "supabaseUrl": "https://bklnaeftoztcahfgxchl.supabase.co",
-  "latestZip": "backups/archives/ema-s-beauty-ai-2026-05-26-144310.zip",
-  "latestEnvBackup": "backups/local-secrets/.env.backup-2026-05-26",
+  "latestZip": "backups/archives/ema-s-beauty-ai-2026-05-30-203804.zip",
+  "latestEnvBackup": "backups/local-secrets/.env.backup-2026-05-30",
+  "messagesInDb": 69,
   "edgeFunctions": [
     { "slug": "whatsapp-webhook", "verifyJwt": false, "version": 12 },
     { "slug": "whatsapp-send", "verifyJwt": true, "version": 1 },
@@ -17,13 +18,11 @@
   "sendUrl": "https://bklnaeftoztcahfgxchl.supabase.co/functions/v1/whatsapp-send",
   "secretsCheckUrl": "https://bklnaeftoztcahfgxchl.supabase.co/functions/v1/twilio-secrets-check",
   "githubRepo": "https://github.com/elsegundocorreodejose-lab/ema-s-beauty-ai",
-  "gitTag": "v0.2-punto-control-2026-05-26",
+  "gitTag": "v0.3-ema-funcionando-2026-05-30",
   "docs": [
+    "docs/PUNTO-CONTROL-2026-05-30.md",
     "docs/PUNTO-CONTROL-2026-05-26.md",
-    "docs/RESPALDO-2026-05-26.md",
     "docs/CHECKLIST-PROYECTO-EMA.md",
-    "docs/CHECKLIST-BACKUP-GITHUB.md",
-    "docs/BACKUP-AUTOMATICO-GITHUB.md",
     "docs/WHATSAPP_TWILIO.md"
   ]
 }
